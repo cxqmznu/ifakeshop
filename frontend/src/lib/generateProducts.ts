@@ -253,45 +253,43 @@ function pid(index: number) {
   return 'IFS-' + String(index).padStart(8, '0');
 }
 
-const imageKeywords: Record<string, string[]> = {
-  smartphones: ['iphone-16-pro', 'samsung-galaxy-s25', 'google-pixel-9', 'oneplus-13'],
-  laptops: ['macbook-pro-m4', 'dell-xps-16', 'thinkpad-x1', 'rog-zephyrus-g16'],
-  tablets: ['ipad-pro-m4', 'galaxy-tab-s10', 'surface-pro-10', 'ipad-air'],
-  smartwatches: ['apple-watch-ultra', 'galaxy-watch-7', 'pixel-watch-3'],
-  headphones: ['airpods-pro', 'sony-wh1000xm6', 'bose-qc-ultra', 'beats-studio-pro'],
-  tvs: ['samsung-oled-s95', 'lg-oled-g4', 'sony-bravia-xr', 'tcl-qm8-qled'],
-  cameras: ['sony-a7r5', 'canon-eos-r5', 'nikon-z8', 'fujifilm-xt6', 'gopro-hero13'],
-  drones: ['dji-mavic-4', 'dji-mini-4-pro', 'autel-evo-lite', 'dji-avata-2'],
-  monitors: ['pro-display-xdr', 'odyssey-oled-g9', 'ultrafine-32-oled', 'alienware-aw3225'],
-  'gaming-pcs': ['alienware-aurora', 'rog-strix', 'corsair-vengeance', 'msi-meg-aegis'],
-  hypercars: ['bugatti-tourbillon', 'koenigsegg-jesko', 'rimac-nevera', 'pininfarina-battista'],
-  supercars: ['ferrari-sf90', 'lamborghini-revuelto', 'mclaren-750s', 'porsche-911-turbo-s'],
-  'sports-cars': ['porsche-718-cayman', 'corvette-z06', 'nissan-gtr', 'toyota-supra', 'bmw-m4'],
-  sedans: ['mercedes-s-class', 'bmw-7-series', 'audi-a8', 'tesla-model-s'],
-  suvs: ['rolls-royce-cullinan', 'bentley-bentayga', 'range-rover', 'porsche-cayenne'],
-  evs: ['tesla-cybertruck', 'rivian-r1s', 'lucid-air', 'polestar-4', 'hyundai-ioniq-6'],
-  motorcycles: ['harley-street-glide', 'ducati-panigale-v4', 'bmw-s1000rr', 'kawasaki-ninja-h2'],
-  yachts: ['azimut-grande-44', 'ferretti-920', 'sunseeker-predator-65', 'princess-y95'],
-  'private-jets': ['gulfstream-g800', 'bombardier-global-7500', 'dassault-falcon-10x', 'cessna-citation-longitude'],
-  mansions: ['beverly-hills-estate', 'bel-air-mansion', 'malibu-beachfront', 'hamptons-estate'],
-  watches: ['rolex-submariner', 'omega-speedmaster', 'patek-nautilus', 'audemars-royal-oak', 'cartier-tank'],
-  jewelry: ['cartier-love-bracelet', 'tiffany-setting-ring', 'bvlgari-serpenti', 'van-cleef-alhambra'],
-  'mens-fashion': ['gucci-suit', 'prada-overcoat', 'saint-laurent-jacket', 'tom-ford-tuxedo'],
-  'womens-fashion': ['chanel-tweed-jacket', 'dior-bar-jacket', 'louis-vuitton-capucines', 'hermes-kelly'],
-  bags: ['hermes-birkin', 'louis-vuitton-neverfull', 'chanel-classic-flap', 'gucci-marmont'],
-  shoes: ['nike-air-jordan', 'adidas-ultraboost', 'gucci-ace-sneaker', 'manolo-blahnik-hangisi'],
-  furniture: ['herman-miller-eames', 'knoll-barcelona', 'vitra-panton-chair', 'cassina-lc4'],
-  decor: ['ikea-poang', 'tom-dixon-melt', 'flos-arco-lamp', 'artemide-tolomeo'],
-  fitness: ['peloton-bike-plus', 'nordictrack-2450', 'bowflex-xtreme', 'tonal-home-gym'],
+const imageTags: Record<string, string> = {
+  smartphones: 'smartphone', laptops: 'laptop', tablets: 'tablet',
+  smartwatches: 'smartwatch', headphones: 'headphone', tvs: 'television',
+  cameras: 'camera', drones: 'drone', monitors: 'computer-monitor',
+  'gaming-pcs': 'gaming-computer', hypercars: 'supercar', supercars: 'sports-car',
+  'sports-cars': 'porsche', sedans: 'mercedes-benz', suvs: 'range-rover',
+  evs: 'tesla-car', motorcycles: 'motorcycle', yachts: 'yacht',
+  'private-jets': 'private-jet', mansions: 'mansion', watches: 'rolex-watch',
+  jewelry: 'diamond-ring', 'mens-fashion': 'mens-fashion', 'womens-fashion': 'fashion-model',
+  bags: 'handbag', shoes: 'sneaker', furniture: 'furniture',
+  decor: 'home-decor', fitness: 'gym', technology: 'technology',
+  automotive: 'car', aviation: 'airplane', marine: 'boat',
+  'real-estate': 'architecture', fashion: 'clothing', home: 'interior-design',
+  sports: 'sport', travel: 'travel', entertainment: 'entertainment',
+  books: 'book', 'health-beauty': 'cosmetics', 'food-grocery': 'food',
+  pets: 'pet-dog', 'office-business': 'office', education: 'education',
+  'special-collections': 'rare-collectible',
 };
 
-function getImagesForProduct(productId: string, category: string, subcategory: string): string[] {
-  const keywords = imageKeywords[subcategory] || imageKeywords[category] || ['product', 'item'];
+const imageTagPool: Record<string, string[]> = {
+  smartphones: ['smartphone', 'iphone', 'samsung-android', 'mobile-phone'],
+  laptops: ['laptop', 'macbook', 'notebook-computer'],
+  hypercars: ['ferrari', 'lamborghini', 'bugatti', 'supercar'],
+  supercars: ['porsche', 'mclaren', 'ferrari', 'sports-car'],
+  watches: ['rolex', 'omega-watch', 'luxury-watch', 'patek'],
+  jewelry: ['diamond', 'gold-jewelry', 'engagement-ring'],
+  bags: ['hermes-bag', 'louis-vuitton', 'designer-handbag'],
+  shoes: ['nike-sneaker', 'high-heels', 'designer-shoe'],
+};
+
+function getImagesForProduct(productId: string, category: string, subcategory: string, index: number): string[] {
+  const pool = imageTagPool[subcategory] || imageTagPool[category] || null;
+  const tag = (pool ? pick(pool) : null) || imageTags[subcategory] || imageTags[category] || 'product';
   const count = rand(4, 6);
   const images: string[] = [];
   for (let i = 0; i < count; i++) {
-    const seed = pick(keywords) + '-' + productId + '-' + i;
-    images.push('https://picsum.photos/seed/' + seed + '/800/800');
+    images.push('https://loremflickr.com/800/800/' + tag + '?lock=' + ((index * 5 + i) % 100000));
   }
   return images;
 }
@@ -351,7 +349,7 @@ export function generateProducts(count: number) {
       sizes: [],
       specifications: {},
       features,
-      images: getImagesForProduct(id, cat.slug, subcat),
+      images: getImagesForProduct(id, cat.slug, subcat, i),
       createdAt: new Date(Date.now() - rand(0, 365 * 3) * 86400000).toISOString(),
     });
   }
